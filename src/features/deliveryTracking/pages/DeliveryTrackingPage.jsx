@@ -1,16 +1,37 @@
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useUpdateDeliveryLocationMutation } from "../redux/deliveryTrackingApiSlice";
 
 const DeliveryTrackingPage = () => {
   const [position, setPosition] = useState([0, 0]);
+  const [updateDeliveryLocation] = useUpdateDeliveryLocationMutation();
 
   useEffect(() => {
+    const updateLocalisationInDb = async (position) => {
+      try {
+        await updateDeliveryLocation({
+          deliveryId: "123456",
+          location: position,
+        }).unwrap();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        setPosition([position.coords.latitude, position.coords.longitude]);
+        try {
+          updateLocalisationInDb([
+            position.coords.latitude,
+            position.coords.longitude,
+          ]);
+          setPosition([position.coords.latitude, position.coords.longitude]);
+        } catch (error) {
+          console.log(error);
+        }
       });
     }
-  }, []);
+  }, [updateDeliveryLocation]);
 
   return (
     <div className="min-h-screen flex justify-center items-center">
