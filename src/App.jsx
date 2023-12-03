@@ -6,6 +6,7 @@ import MailRoutes from "./features/mail/routes/MailRoutes";
 import { useEffect } from "react";
 import socketIOClient from "socket.io-client";
 import DeliveryTrackingRoutes from "./features/deliveryTracking/routes/DeliveryTrackingRoutes";
+import { AuthMiddleware } from "./features/auth/middlewares";
 
 function App() {
   useEffect(() => {
@@ -24,7 +25,11 @@ function App() {
         <Route path="/mail/*" element={<MailRoutes />} />
         <Route
           path="/delivery-tracking/*"
-          element={<DeliveryTrackingRoutes />}
+          element={
+            <AuthMiddleware>
+              <DeliveryTrackingRoutes />
+            </AuthMiddleware>
+          }
         />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
