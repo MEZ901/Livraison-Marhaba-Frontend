@@ -5,7 +5,7 @@ import * as React from 'react';
 // import  {useEffect} from 'react';
 import  { useEffect } from 'react';
 
-
+import  axios  from 'axios';
 
 import { useSelector,useDispatch } from 'react-redux';
 import {
@@ -51,15 +51,47 @@ export default function SwipeableTemporaryDrawer() {
     dispatch( clearCart());
   };
 
-  const handleAlert = () => {
-    Swal.fire({
-      title: "Good job!",
-      text: "You clicked the button!",
-      icon: "success"
-    });
+  // const handleAlert = () => {
+  //   Swal.fire({
+  //     title: "Good job!",
+  //     text: "You clicked the button!",
+  //     icon: "success"
+  //   });
+  // };
+
+  const handleAlert = async () => {
+    try {
+      // Assuming you have access to the user and foods information from your Redux state
+      const orderData = {
+        user: "65649f15f7ae2d9095880b74"/* Get user information from your Redux state */,
+        foods: cart.cartItems, // Assuming cart.cartItems contains the list of foods
+      };
+  
+      // Make the API call
+      const response = await axios.post('http://localhost:8080/api/order/ordern', orderData);
+  
+      // Handle the response as needed
+      console.log('Order placed successfully:', response.data);
+  
+      // Clear the cart after placing the order (you may want to handle this differently based on your requirements)
+      dispatch(clearCart());
+  
+      // Show a success message or redirect to a success page
+      Swal.fire({
+        title: 'Order Placed!',
+        text: 'Thank you for your order.',
+        icon: 'success',
+      });
+    } catch (error) {
+      // Handle errors
+      console.error('Error placing order:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Failed to place the order. Please try again later.',
+        icon: 'error',
+      });
+    }
   };
-
-
 
 
   useEffect(() => {

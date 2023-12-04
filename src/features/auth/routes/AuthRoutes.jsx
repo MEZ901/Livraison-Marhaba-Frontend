@@ -2,6 +2,9 @@ import { Route, Routes } from "react-router";
 import AuthLayout from "../layouts/AuthLayout";
 import { LoginPage, RegisterPage } from "../pages";
 
+
+
+
 const AuthRoutes = () => (
   <Routes>
     <Route path="/" element={<AuthLayout />}>
