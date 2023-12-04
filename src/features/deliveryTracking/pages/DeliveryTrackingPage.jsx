@@ -12,10 +12,12 @@ const DeliveryTrackingPage = () => {
   useEffect(() => {
     const updateLocalisationInDb = async (position) => {
       try {
-        socket.emit("deliveryLocation", {
-          deliveryId: user.id,
-          location: position,
-        });
+        if (socket) {
+          socket.emit("deliveryLocation", {
+            deliveryId: user.id,
+            location: position,
+          });
+        }
       } catch (error) {
         console.log(error);
       }
