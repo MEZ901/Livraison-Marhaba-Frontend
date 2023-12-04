@@ -3,8 +3,13 @@ import { RootLayout } from "./shared/layouts";
 import { NotFoundPage } from "./shared/pages";
 import AuthRoutes from "./features/auth/routes/AuthRoutes";
 import MailRoutes from "./features/mail/routes/MailRoutes";
+
+import MenuRoutes from "./features/menu/routes/menuRoutes";
+import SearchMapRoutes from "./features/searchMap/routes/SearchMapRoutes";
+import LandingPage from "./shared/pages/LandingPage"
 import ProductRoutes from "./features/products/routes/ProductRoutes";
 import AdminRoutes from "./features/adminDashboard/routes/AdminRoutes";
+
 
 
 
@@ -13,12 +18,13 @@ function App() {
     
     <Routes>
       <Route path="/" element={<RootLayout />}>
-        <Route index element={<h1>Home Page</h1>} />
+        <Route index element={<LandingPage/>} />
         <Route path="/auth/*" element={<AuthRoutes />} />
         <Route path="/mail/*" element={<MailRoutes />} />
+        <Route path="/menu/*" element={<MenuRoutes />} />
+        <Route path="/search/*" element={<SearchMapRoutes />} />
         <Route path="/products/*" element={<ProductRoutes />} />
         <Route path="/dashboard/*" element={<AdminRoutes />} />
-
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
