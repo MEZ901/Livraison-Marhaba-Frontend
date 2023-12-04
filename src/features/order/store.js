@@ -1,13 +1,13 @@
-// store.js
+// // store.js
 
-import { configureStore } from '@reduxjs/toolkit';
-import orderReducer from './api/OrderSlice';
+// import { configureStore } from '@reduxjs/toolkit';
+// import orderReducer from './api/OrderSlice';
 
-const store = configureStore({
-  reducer: {
-    orders: orderReducer,
-    // ... other reducers
-  },
-});
+// const store = configureStore({
+//   reducer: {
+//     orders: orderReducer,
+//     // ... other reducers
+//   },
+// });
 
-export default store;
+// export default store;
