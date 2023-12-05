@@ -12,7 +12,6 @@ const LeafletRoutingMachine = () => {
       const { latitude, longitude } = position.coords;
 
       map.on("click", function (e) {
-        console.log(e.latlng)
         L.Routing.control({
           waypoints: [
             L.latLng(latitude, longitude),

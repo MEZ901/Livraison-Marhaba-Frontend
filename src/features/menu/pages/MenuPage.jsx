@@ -20,7 +20,6 @@ import {
   useCreateMenuMutation,
   useDeleteMenuMutation,
   useUpdateMenuMutation,
-  useUploadPhotoMutation,
 } from "../redux/menuApiSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -28,11 +27,11 @@ export default function MenuPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [menuData, setMenuData] = useState(null);
-  console.log(menuData)
   const [newMenu, setNewMenu] = useState({
     name: "",
-    description: "",
+    description:"",
     price: "",
+    image:""
   });
   const [selectedMenu, setSelectedMenu] = useState(null);
   const [createMenu] = useCreateMenuMutation();
@@ -55,6 +54,7 @@ export default function MenuPage() {
         name: "",
         description: "",
         price: "",
+        image:""
       });
       // Close the modal
       onClose();
@@ -148,16 +148,16 @@ export default function MenuPage() {
                 <p className="text-default-500">{menu.price} DH</p>
                 
               </CardFooter>
-              <div class="p-6">
-            <p class="text-gray-700 leading-tight mb-4">
+              <div className="p-6">
+            <p className="text-gray-700 leading-tight mb-4">
             {menu.description}
             </p>
-            <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                    <img src={console.log(menu.image)} alt="Avatar" class="w-8 h-8 rounded-full mr-2 object-cover"/>
-                    <span class="text-gray-800 font-semibold">John Doe</span>
+            <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                    <img src="" alt="Avatar" className="w-8 h-8 rounded-full mr-2 object-cover"/>
+                    <span className="text-gray-800 font-semibold">John Doe</span>
                 </div>
-                <span class="text-gray-600 ">2 hours ago</span>
+                <span className="text-gray-600 ">2 hours ago</span>
             </div>
         </div>
             </Card>

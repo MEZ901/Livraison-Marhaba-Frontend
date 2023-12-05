@@ -15,7 +15,7 @@ const EditMenuForm = ({ selectedMenu, setSelectedMenu, onClose, handleEditMenu }
       <ModalHeader className="flex flex-col gap-1">Edit Menu Item</ModalHeader>
       <ModalBody>
         <div className="mb-3">
-          <label htmlFor="name" className="mb-2 block text-base font-medium text-[#07074D]">
+          <label  className="mb-2 block text-base font-medium text-[#07074D]">
             Title:
           </label>
           <input
@@ -28,7 +28,7 @@ const EditMenuForm = ({ selectedMenu, setSelectedMenu, onClose, handleEditMenu }
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="description" className="mb-2 block text-base font-medium text-[#07074D]">
+          <label  className="mb-2 block text-base font-medium text-[#07074D]">
             Description:
           </label>
           <input
@@ -41,7 +41,7 @@ const EditMenuForm = ({ selectedMenu, setSelectedMenu, onClose, handleEditMenu }
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="price" className="mb-2 block text-base font-medium text-[#07074D]">
+          <label  className="mb-2 block text-base font-medium text-[#07074D]">
             Price:
           </label>
           <input
