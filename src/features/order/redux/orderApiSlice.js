@@ -1,26 +1,26 @@
-// import { apiSlice } from "../../../app/api/apiSlice";
-// import orderSlice, { setPendingOrders } from "./orderSlice";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// export const orderApiSlice = apiSlice.injectEndpoints({
-//   endpoints: (builder) => ({
-//     makeOrder: builder.mutation({
-//       query: () => ({
-//         url: "/order/ordern",
-//         method: "POST",
-//       }),
-//     }),
+export const ordersApi = createApi({
+  reducerPath: "ordersApi",
 
-//     getPendingOrders: builder.query({
-//       query: () => ({
-//         url: "/order/pending",
-//         method: "GET",
-//       }),
-//       onSuccess: (data) => setPendingOrders(data),
-//     }),
-//   }),
-// });
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/api/" }),
+  endpoints: (builder) => ({
+    getAllOrders: builder.query({
+      query: () => `order/orderPending`,
 
-// export const { useMakeOrderMutation, useGetPendingOrdersQuery } =
-//   orderApiSlice;
 
-// export const { reducer: orderReducer } = orderSlice;
+    }),
+    
+    confirmOrder: builder.mutation({
+
+        query: ({ params: { _id } }) => ({
+
+          url: `order/confirm/${_id}`,
+          method: 'PUT', // or 'PUT' or 'PATCH' based on your API
+        }),
+      }),
+  }),
+});
+
+
+export const { useGetAllOrdersQuery, useConfirmOrderMutation } = ordersApi;

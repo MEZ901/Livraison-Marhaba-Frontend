@@ -1,87 +1,77 @@
-// import { useState } from 'react';
-// import { useGetAllProductsQuery } from '../redux/productsAPI';
-// import { useDispatch } from 'react-redux';
-// import {useNavigate } from 'react-router-dom'
-// import { addToCart } from '../redux/cartSlice';
-
-// import SwipeableTemporaryDrawer from "./Cart"
-
-
-
-
-
+import { Navbar } from "../layout/NavBar";
+import { SideBar } from "../layout/SideBar";
+import { useConfirmOrderMutation, useGetAllOrdersQuery } from "../../order/redux/orderApiSlice";
 
 export const Dashboard = () => {
-
-//   const dispatch = useDispatch()
-
-//   const [isAddingToCart, setIsAddingToCart] = useState(false);
-
-//   const { data, error, isLoading } = useGetAllProductsQuery();
-
-//   const handleAddToCart = (product) =>{
-//     setIsAddingToCart(false);
-//     dispatch(addToCart(product))
-//     setIsAddingToCart(false);
   
-//   }
+    const { data } = useGetAllOrdersQuery();
+    const [confirmOrder] = useConfirmOrderMutation();
 
-//   if (isLoading) {
-//     return <div>Loading products...</div>;
-//   }
+    console.log("confirmOrder", confirmOrder)
+    if (!data) {
+        return <p>Loading...</p>;
+    }
+    const handleConfirmOrder = async (orderId) => {
+        try {
+           
+          const result = await confirmOrder({ params: { _id: orderId } });
+          
+          console.log(orderId)
+          console.log('Order confirmed successfully', result);
+        } catch (error) {
+         
+          console.error('Failed to confirm order', error);
+        }
+      };
+//   console.log("xx",data.pendingOrders);
 
-//   if (error) {
-//     return <div>Error: Unable to fetch products. Please try again later.</div>;
-//   }
-
-  return (
-    <div>
-
-<div className=' absolute w-full   grid grid-cols-3 		 '>
-{/* {data.menus?.map((product) => (
-     <div key={product.id}> */}
-      
-<div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-4  ">
-    <a href="#">
-        <img className="p-8 rounded-t-lg"  alt="product image" />
-    </a>
-    <div className="px-5 pb-5">
-        <a href="#">
-            <h3 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">kl</h3>
-        </a>
-        <a href="#">
-            <h5 className="text-xl font-semibold tracking-tight text-yellow-500 dark:text-white">kkl</h5>
-        </a>
-        <div className="flex items-center mt-2.5 mb-5">
-            <div className="flex items-center space-x-1 rtl:space-x-reverse">
-                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                </svg>
-                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                </svg>
-                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                </svg>
-                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                </svg>
-                <svg className="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                </svg>
-            </div>
-            <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">5.0</span>
+  return (  
+        <div>
+        <Navbar />
+        <main className="flex flex-col md:flex-row">
+            <SideBar />
+            <section className="flex-1">
+                <div id="main" className="main-content bg-gray-100 mt-12 md:mt-12 pb-24 md:pb-5">
+                    <div className="overflow-x-auto shadow-md sm:rounded-lg">
+                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th className="px-6 py-3">Order</th>
+                            <th className="px-6 py-3">Food</th>
+                            
+                            <th className="px-6 py-3">Price</th>
+                            <th className="px-6 py-3"><span className="sr-only">Confirm and pick up</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {data.pendingOrders?.map((product) => (
+                                <div key={product.id}>
+                                    {product.food.map((f, index) => (
+                                        <>
+                                        <tr key={index}>
+                                            <td  className="px-6 py-4">1</td>
+                                            <td  className="px-6 py-3">{f.name}</td>
+                                            <td  className="px-6 py-3">{product.price}</td>
+                                            <td  className="  px-6 py-3 ">
+                                                <a onClick= {() => handleConfirmOrder(product._id)} href="#" className="font-medium text-orange-600 dark:text-orange-500 hover:underline"> confirm and pickup </a>
+                                            </td>
+                                        </tr>
+                                       
+                                        </>
+                                    ))}
+                                </div>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </section>
+        </main>
         </div>
-        <div className="flex items-center justify-between">
-            <span className="text-3xl font-bold text-gray-900 dark:text-white">DH</span>
-            <button   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"> kjk</button>
-        </div>
-    </div>
-</div>
 
-</div>
-        {/* ))} */}
-        {/* </div> */}
-    </div>
   );
 };
+
+
+
+

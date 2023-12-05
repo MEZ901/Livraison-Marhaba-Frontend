@@ -1,20 +1,18 @@
-// import { createSlice } from "@reduxjs/toolkit";
-// // import { apiSlice } from "../../../app/api/apiSlice";
+import { createSlice } from "@reduxjs/toolkit";
+const initialState = {
+  pendingOrders: [],
+};
 
-// const initialState = {
-//   pendingOrders: [],
-// };
+const orderSlice = createSlice({
+  name: "order",
+  initialState,
+  reducers: {
+    setPendingOrders: (state, action) => {
+      state.pendingOrders = action.payload;
+    },
+  },
+});
 
-// const orderSlice = createSlice({
-//   name: "order",
-//   initialState,
-//   reducers: {
-//     setPendingOrders: (state, action) => {
-//       state.pendingOrders = action.payload;
-//     },
-//   },
-// });
+export const { setPendingOrders } = orderSlice.actions;
 
-// export const { setPendingOrders } = orderSlice.actions;
-
-// export default orderSlice.reducer;
+export default orderSlice.reducer;
