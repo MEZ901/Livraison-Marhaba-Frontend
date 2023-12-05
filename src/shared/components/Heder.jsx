@@ -1,5 +1,3 @@
-
-
 import {
   Navbar,
   NavbarBrand,
@@ -15,9 +13,25 @@ import {
 } from "@nextui-org/react";
 
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import {selectIsLoggedIn} from "../../features/auth/redux/authSelectors"
+import { logOut } from "../../features/auth/redux/authSlice";
+import { useLogoutMutation } from "../../features/auth/redux/authApiSlice";
 
 function Header() {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
+  const [logout] = useLogoutMutation();
+
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+      dispatch(logOut());
+      localStorage.removeItem("user");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -29,7 +43,7 @@ function Header() {
           </p>
         </NavbarBrand>
 
-        { false ? (
+        { isLoggedIn ? (
           <>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
               <NavbarItem as={Link}  to="">  
@@ -79,7 +93,7 @@ function Header() {
                   </DropdownItem>
 
                   <DropdownItem key="logout" color="danger" textValue="Log Out">
-                    <Link >Logout</Link>
+                    <Link  onClick={handleLogout} >Logout</Link>
                   </DropdownItem>
                 </DropdownMenu>
               </Dropdown>

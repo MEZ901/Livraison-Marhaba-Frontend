@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import { useSelector } from 'react-redux';
+import {selectIsLoggedIn} from "../../features/auth/redux/authSelectors"
 
 const LandingPage = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
     
@@ -23,7 +25,7 @@ const LandingPage = () => {
                 className="inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg text-white bg-green-400 rounded-2xl sm:w-auto sm:mb-0"
               >
                 {
-                false ?
+                isLoggedIn ?
                 <Link to="/dashboard"> Dadhboard</Link>
                 :
                 <Link to='/auth/register'>Get started</Link>
@@ -42,7 +44,7 @@ const LandingPage = () => {
                   ></path>
                 </svg>
               </span>
-           { false && <span
+           { !isLoggedIn && <span
                
                 className="inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg bg-gray-100 rounded-2xl sm:w-auto sm:mb-0"
               >
