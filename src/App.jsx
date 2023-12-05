@@ -6,11 +6,21 @@ import MailRoutes from "./features/mail/routes/MailRoutes";
 import DeliveryTrackingRoutes from "./features/deliveryTracking/routes/DeliveryTrackingRoutes";
 import { AuthMiddleware } from "./features/auth/middlewares";
 
+import MenuRoutes from "./features/menu/routes/menuRoutes";
+import SearchMapRoutes from "./features/searchMap/routes/SearchMapRoutes";
+import LandingPage from "./shared/pages/LandingPage"
+import ProductRoutes from "./features/products/routes/ProductRoutes";
+import AdminRoutes from "./features/adminDashboard/routes/AdminRoutes";
+
+
+
+
 function App() {
   return (
+    
     <Routes>
       <Route path="/" element={<RootLayout />}>
-        <Route index element={<h1>Home Page</h1>} />
+        <Route index element={<LandingPage/>} />
         <Route path="/auth/*" element={<AuthRoutes />} />
         <Route path="/mail/*" element={<MailRoutes />} />
         <Route
@@ -21,9 +31,14 @@ function App() {
             </AuthMiddleware>
           }
         />
+        <Route path="/menu/*" element={<MenuRoutes />} />
+        <Route path="/search/*" element={<SearchMapRoutes />} />
+        <Route path="/products/*" element={<ProductRoutes />} />
+        <Route path="/dashboard/*" element={<AdminRoutes />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
+
   );
 }
 
