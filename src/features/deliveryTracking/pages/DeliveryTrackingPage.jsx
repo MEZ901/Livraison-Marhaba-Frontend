@@ -6,44 +6,84 @@ import { selectCurrentUser } from "../../auth/redux/authSelectors";
 
 const DeliveryTrackingPage = () => {
   const [position, setPosition] = useState([0, 0]);
+  const [customerLocation, setCustomerLocation] = useState([31.6398, -8.0101]);
+  const [isLoading, setIsLoading] = useState(true);
   const socket = useSocket();
   const user = useSelector(selectCurrentUser);
 
+  const updateDeliveryLocation = (position) => {
+    try {
+      socket?.emit("updateDeliveryLocation", {
+        deliveryId: user.id,
+        location: position,
+      });
+    } catch (error) {
+      console.log("Error updating delivery location:", error);
+    }
+  };
+
+  const handleGeolocationSuccess = (currentPosition) => {
+    try {
+      const newPosition = [
+        currentPosition.coords.latitude,
+        currentPosition.coords.longitude,
+      ];
+      setPosition(newPosition);
+      updateDeliveryLocation(newPosition);
+      setIsLoading(false);
+    } catch (error) {
+      console.log("Error handling geolocation:", error);
+    }
+  };
+
+  const handleGeolocationError = (error) => {
+    console.error("Error getting location:", error);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const updateLocalisationInDb = async (position) => {
-      try {
-        if (socket) {
-          socket.emit("deliveryLocation", {
-            deliveryId: user.id,
-            location: position,
-          });
-        }
-      } catch (error) {
-        console.log(error);
+    if (user.roles.includes("delivery")) {
+      const watchId = navigator.geolocation.watchPosition(
+        handleGeolocationSuccess,
+        handleGeolocationError
+      );
+
+      return () => {
+        navigator.geolocation.clearWatch(watchId);
+      };
+    } else {
+      socket?.emit("getDeliveryLocation", {
+        deliveryId: "656c71c69a4d3371de3f8319",
+      });
+    }
+  }, [socket, user]);
+
+  useEffect(() => {
+    const handleDeliveryLocation = (data) => {
+      if (!data.error) {
+        setIsLoading(false);
+        setPosition(data.location);
+      } else {
+        console.log("Error fetching delivery location:", data.error);
       }
     };
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        try {
-          updateLocalisationInDb([
-            position.coords.latitude,
-            position.coords.longitude,
-          ]);
-          setPosition([position.coords.latitude, position.coords.longitude]);
-        } catch (error) {
-          console.log(error);
-        }
-      });
-    }
-  }, [socket, user.id]);
+    socket?.on("deliveryLocation", handleDeliveryLocation);
+
+    return () => {
+      socket?.off("deliveryLocation", handleDeliveryLocation);
+    };
+  }, [socket]);
 
   return (
     <div className="min-h-screen flex justify-center items-center">
-      {position[0] === 0 && position[1] === 0 ? (
+      {isLoading ? (
         <h1>loading...</h1>
       ) : (
-        <TrackingMap position={position} />
+        <TrackingMap
+          deliveryPosition={position}
+          customerLocation={customerLocation}
+        />
       )}
     </div>
   );
