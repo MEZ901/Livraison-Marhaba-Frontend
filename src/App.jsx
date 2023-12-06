@@ -11,6 +11,8 @@ import SearchMapRoutes from "./features/searchMap/routes/SearchMapRoutes";
 import LandingPage from "./shared/pages/LandingPage"
 import ProductRoutes from "./features/products/routes/ProductRoutes";
 import AdminRoutes from "./features/adminDashboard/routes/AdminRoutes";
+import DeliveryRoutes from "./features/delivery/routes/DeliveryRoute";
+
 
 
 
@@ -35,6 +37,8 @@ function App() {
         <Route path="/search/*" element={<SearchMapRoutes />} />
         <Route path="/products/*" element={<ProductRoutes />} />
         <Route path="/dashboard/*" element={<AdminRoutes />} />
+        <Route path="/delivery/*" element={<DeliveryRoutes />} />
+
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
