@@ -15,6 +15,7 @@ import WarningIcon from "./WarningIcon";
 import InfoIcon from "./InfoIcon";
 import SuccessIcon from "./SuccessIcon";
 import CloseIcon from "./CloseIcon";
+import DeliveryManMarker from "./DeliveryManMarker";
 
 export {
   VerifiedIcon,
@@ -34,4 +35,5 @@ export {
   InfoIcon,
   SuccessIcon,
   CloseIcon,
+  DeliveryManMarker,
 };
